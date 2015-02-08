@@ -74,24 +74,16 @@ RAILS_VERSIONS = [
   "4.1.7",
   "4.1.7.1",
   "4.1.8",
-  "4.1.9"
+  "4.1.9",
+  "4.2.0"
 ]
 
 RAILS_VERSIONS.each do |version|
   appraise "rails_#{version}" do
     gem 'activerecord', version
 
-    minitest_version = case version
-      when /^3/
-        '~> 4.0'
-      when /^4.0/
-        '~> 4.2'
-      when /^4.1/
-        '~> 5.1'
-      else
-        raise 'no minitest version specified for that ActiveRecord version'
+    if version =~ /^3/
+      gem 'minitest', '~> 4.0'
     end
-
-    gem 'minitest', minitest_version
   end
 end
